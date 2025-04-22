@@ -18,7 +18,7 @@ describe("laskeVertausluvut", () => {
     });
   });
   afterEach(() => {
-    mock.restore(ehdokasRekisteri.haeLista);
+    mock.reset();
   });
 
   it('listan eniten ääniä saaneen ehdokkaan vertausluku on listan äänten summa', () => {
