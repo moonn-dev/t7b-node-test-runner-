@@ -9,7 +9,6 @@ function laskeVertausluvut(ehdokkaat) {
   // Järjestetään ehdokkaat äänimäärän mukaan laskevasti
   const jarjestetyt = [...ehdokkaat].sort((a, b) => b.aanet - a.aanet);
 
-  // Ryhmitellään ehdokkaat saman äänimäärän perusteella
   const ryhmat = [];
   let currentGroup = [];
   let currentVotes = jarjestetyt[0].aanet;
@@ -18,23 +17,18 @@ function laskeVertausluvut(ehdokkaat) {
     if (ehdokas.aanet === currentVotes) {
       currentGroup.push(ehdokas);
     } else {
-      // Saman äänimäärän saaneet arpoaan järjestyksen
       ryhmat.push(randomize(currentGroup));
       currentGroup = [ehdokas];
       currentVotes = ehdokas.aanet;
     }
   });
-
-  // Lisää viimeinen ryhmä
   if (currentGroup.length > 0) {
     ryhmat.push(randomize(currentGroup));
   }
-
-  // Yhdistetään kaikki ryhmät takaisin listaksi
   const jarjestettyJaArvottu = ryhmat.flat().map((ehdokas, index) => ({
     ...ehdokas,
-    arvottu: true, // Kaikki samat äänimäärät saaneet saavat arvottu-merkinnän
-    vertausluku: jarjestetyt.reduce((summa, ehdokas) => summa + ehdokas.aanet, 0) / (index + 1), // D'Hondt laskentakaava
+    arvottu: true,
+    vertausluku: jarjestetyt.reduce((summa, ehdokas) => summa + ehdokas.aanet, 0) / (index + 1),
   }));
 
   return jarjestettyJaArvottu;
