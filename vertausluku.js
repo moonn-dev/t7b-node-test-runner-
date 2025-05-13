@@ -28,7 +28,7 @@ function laskeVertausluvut(ehdokkaat) {
   const jarjestettyJaArvottu = ryhmat.flat().map((ehdokas, index) => ({
     ...ehdokas,
     arvottu: true,
-    vertausluku: ehdokas.aanet / (index + 1),
+    vertausluku: jarjestetyt.reduce((summa, ehdokas) => summa + ehdokas.aanet, 0) / (index + 1),
   }));
 
   return jarjestettyJaArvottu;
